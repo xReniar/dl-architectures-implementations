@@ -39,7 +39,7 @@ class AlexNet(nn.Module):
         )
         self.fc3 = nn.Sequential(
             nn.Linear(4096, num_classes),
-            nn.Softmax()
+            nn.Softmax(dim=1)
         )
 
     def forward(self, x:torch.Tensor):
@@ -49,7 +49,7 @@ class AlexNet(nn.Module):
         out = self.conv3(out)
         out = self.conv4(out)
         out = self.conv5(out)
-        out = out.reshape(out.size(0),-1)
+        out = out.view(out.size(0),-1)
         out = self.fc1(out)
         out = self.fc2(out)
         out = self.fc3(out)
