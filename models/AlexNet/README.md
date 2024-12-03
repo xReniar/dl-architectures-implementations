@@ -19,4 +19,4 @@ self.fc = nn.Sequential(
     nn.ReLU()
 )
 ```
-In the `forward` function is defined how the input should be elaborated when passing trough the network. It should be noted that the output of the latest convolutional layer is being flattened because it needs to be used as input for an MLP layer. Another thing to consider is that the picture shows that the output should return a vector of 1000 elements, but the implementation this values is parameterized using `num_classes`.
+In the `forward` function is defined how the input should be elaborated when passing trough the network. It should be noted that the output of the latest convolutional layer is being flattened because it needs to be used as input for an MLP layer. Another thing to consider is that the picture shows that the output should return a vector of 1000 elements, but in the implementation this value is parameterized using `num_classes`.
