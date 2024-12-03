@@ -23,7 +23,8 @@ class LeNet5(nn.Module):
             nn.Tanh()
         )
         self.fc2 = nn.Sequential(
-            nn.Linear(84, num_classes)
+            nn.Linear(84, num_classes),
+            nn.Softmax(dim=1)
         )
 
     def forward(self, x:torch.Tensor):
