@@ -3,7 +3,7 @@ import torch
 
 class AlexNet(nn.Module):
     def __init__(self, num_classes:int) -> None:
-        super(AlexNet, self).__init__()
+        super().__init__()
         self.conv1 = nn.Sequential(
             nn.Conv2d(3, 96, kernel_size=11,stride=4),
             nn.ReLU(),

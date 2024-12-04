@@ -9,4 +9,4 @@ def NiN_block():
 
 class NiN(nn.Module):
     def __init__(self) -> None:
-        super(NiN, self).__init__()
+        super().__init__()

@@ -4,7 +4,7 @@ import torch
 
 class VGG_16(nn.Module):
     def __init__(self, num_classes) -> None:
-        super(VGG_16, self).__init__()
+        super().__init__()
         self.conv1 = nn.Sequential(
             nn.Conv2d(3,64,kernel_size=3, stride=1,padding=1),
             nn.ReLU(),
