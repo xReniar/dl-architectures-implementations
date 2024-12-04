@@ -2,7 +2,7 @@ from torch import nn
 import torch
 
 
-class VGG_16(nn.Module):
+class vgg16(nn.Module):
     def __init__(self, num_classes) -> None:
         super().__init__()
         self.conv1 = nn.Sequential(
