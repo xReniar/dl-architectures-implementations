@@ -25,5 +25,5 @@ $$ (\text{batch size}, \text{channels}, \text{height}, \text{width}) $$
 ```
 To match the size of the `fc` just use `nn.view()` function to get the output tensor in this form:
 ```math
-$$ (\text{batch size}, \text{channels} * \text{height} * \text{width}) $$
+$$ (\text{batch size}, \text{channels} \cdot \text{height} \cdot \text{width}) $$
 ```
