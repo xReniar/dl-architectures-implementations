@@ -20,6 +20,10 @@ self.layer = nn.Sequential(
 The image is very explanatory for the parameters to set, except for the padding values. Those values are set to 1 to match the output size of every layer as shown in the image.
 ### Flattening stage
 The first `fully-connected` layer has `25088` parameters; it's very simple to calculate it, the output of a `conv` layer is usually in this form: (4 elements)
+```math
 $$ (\text{batch size}, \text{channels}, \text{height}, \text{width}) $$
+```
 To match the size of the `fc` just use `nn.view()` function to get the output tensor in this form: (2 elements)
+```math
 $$ (\text{batch size}, \text{channels} * \text{height} * \text{width}) $$
+```
