@@ -1,7 +1,19 @@
 from torch import nn
 import torch
 
-def Inception_block():
+def inception_block_v1():
+    pass
+
+def inception_block_v2():
+    pass
+
+def inception_block_v3():
+    pass
+
+def inception_block_v4():
+    pass
+
+def auxiliary_classifier():
     pass
 
 class GoogLeNet(nn.Module):
