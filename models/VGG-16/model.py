@@ -7,50 +7,50 @@ class vgg16(nn.Module):
         super().__init__()
         self.conv1 = nn.Sequential(
             nn.Conv2d(3,64,kernel_size=3, stride=1,padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.Conv2d(64,64,kernel_size=3, stride=1,padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2)
         )
         self.conv2 = nn.Sequential(
             nn.Conv2d(64,128,kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.Conv2d(128,128,kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2)
         )
         self.conv3 = nn.Sequential(
             nn.Conv2d(128,256,kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.Conv2d(256,256,kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2)
         )
         self.conv4 = nn.Sequential(
             nn.Conv2d(256,512,kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.Conv2d(512,512,kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.Conv2d(512,512,kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2,stride=2)
         )
         self.conv5 = nn.Sequential(
             nn.Conv2d(512,512,kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.Conv2d(512,512,kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.Conv2d(512,512,kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2)
         )
         self.fc1 = nn.Sequential(
             nn.Linear(25088, 4096),
-            nn.ReLU()
+            nn.ReLU(inplace=True)
         )
         self.fc2 = nn.Sequential(
             nn.Linear(4096, 4096),
-            nn.ReLU()
+            nn.ReLU(inplace=True)
         )
         self.fc3 = nn.Sequential(
             nn.Linear(4096,num_classes)

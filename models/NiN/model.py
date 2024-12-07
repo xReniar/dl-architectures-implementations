@@ -5,11 +5,11 @@ import torch
 def NiN_block(in_features:int, out_features:int, kernel_size:int, stride:int = 1, padding:int = 0):
     return nn.Sequential(
         nn.Conv2d(in_features, out_features, kernel_size=kernel_size, stride=stride, padding=padding),
-        nn.ReLU(),
+        nn.ReLU(inplace=True),
         nn.Conv2d(out_features, out_features, kernel_size=1),
-        nn.ReLU(),
+        nn.ReLU(inplace=True),
         nn.Conv2d(out_features, out_features, kernel_size=1),
-        nn.ReLU()
+        nn.ReLU(inplace=True)
     )
 
 class NiN(nn.Module):
