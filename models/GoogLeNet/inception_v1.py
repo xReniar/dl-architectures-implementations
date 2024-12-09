@@ -14,8 +14,7 @@ class Inception_Block_v1(nn.Module):
             nn.Conv2d(in_features, branch_2[0], kernel_size=1),
             nn.BatchNorm2d(branch_2[0]),
             nn.ReLU(),
-            nn.Conv2d(branch_2[0], branch_2[1], kernel_size=3),
-            nn.BatchNorm2d(branch_2[1]),
+            nn.Conv2d(branch_2[0], branch_2[1], kernel_size=3, padding=1),
             nn.ReLU()
         )
         self.branch3 = nn.Sequential(
@@ -27,7 +26,7 @@ class Inception_Block_v1(nn.Module):
             nn.ReLU()
         )
         self.branch4 = nn.Sequential(
-            nn.MaxPool2d(kernel_size=3, stride=1),
+            nn.MaxPool2d(kernel_size=3, stride=1, padding=1),
             nn.Conv2d(in_features, branch_4[0], kernel_size=1),
             nn.BatchNorm2d(branch_4[0]),
             nn.ReLU()
@@ -40,4 +39,4 @@ class Inception_Block_v1(nn.Module):
         b3_out = self.branch3(x)
         b4_out = self.branch4(x)
 
-        return torch.cat([b1_out, b2_out, b3_out, b4_out])
+        return torch.cat([b1_out, b2_out, b3_out, b4_out], dim=1)
