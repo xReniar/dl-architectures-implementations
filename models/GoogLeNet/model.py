@@ -1,17 +1,15 @@
-from inception_v1 import Inception_Block_v1
-from inception_v2 import Inception_Block_v2
-from inception_v3 import Inception_Block_v3
-from inception_v4 import Inception_Block_v4
+from InceptionModule.v1 import Inception_Block_v1
+from InceptionModule.v2 import Inception_Block_v2
+from InceptionModule.v3 import Inception_Block_v3
+from InceptionModule.v4 import Inception_Block_v4
 from torch import nn
 import torch
 
 
-def auxiliary_classifier():
-    pass
-
 class GoogLeNet(nn.Module):
     def __init__(self, num_classes:int, inception_block_version:str):
         super().__init__()
+        self.inception_module_version = inception_block_version
         self.conv1 = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=7,stride=2, padding=3),
             nn.BatchNorm2d(64),
@@ -27,20 +25,20 @@ class GoogLeNet(nn.Module):
             nn.ReLU(inplace=True)
         )
         self.maxpool2 = nn.MaxPool2d(kernel_size=3, stride=2)
-        self.inception_3a = Inception_Block_v1(192, [64], [96,128], [16,32], [32])
-        self.inception_3b = Inception_Block_v1(256, [128], [128,192], [32,96], [64])
+        self.inception_3a = self.inception_module(192, [64], [96,128], [16,32], [32])
+        self.inception_3b = self.inception_module(256, [128], [128,192], [32,96], [64])
         self.maxpool3 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-        self.inception_4a = Inception_Block_v1(480, [192], [96, 208], [16,48], [64])
-        self.inception_4b = Inception_Block_v1(512, [160], [112,224], [24,64], [64])
-        self.inception_4c = Inception_Block_v1(512, [128], [128,256], [24,64], [64])
-        self.inception_4d = Inception_Block_v1(512, [112], [144,288], [32,64], [64])
-        self.inception_4e = Inception_Block_v1(528, [256], [160,320], [32,128], [128])
+        self.inception_4a = self.inception_module(480, [192], [96, 208], [16,48], [64])
+        self.inception_4b = self.inception_module(512, [160], [112,224], [24,64], [64])
+        self.inception_4c = self.inception_module(512, [128], [128,256], [24,64], [64])
+        self.inception_4d = self.inception_module(512, [112], [144,288], [32,64], [64])
+        self.inception_4e = self.inception_module(528, [256], [160,320], [32,128], [128])
         self.maxpool4 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-        self.inception_5a = Inception_Block_v1(832, [256], [160,320], [32, 128], [128])
-        self.inception_5b = Inception_Block_v1(832, [384], [192,384], [48,128], [128])
+        self.inception_5a = self.inception_module(832, [256], [160,320], [32, 128], [128])
+        self.inception_5b = self.inception_module(832, [384], [192,384], [48,128], [128])
         self.avgpool = nn.Sequential(
             nn.AvgPool2d(kernel_size=7, stride=1),
-            nn.Dropout(0.4)
+            nn.Dropout(p=0.4, inplace=True)
         )
         self.classifier = nn.Sequential(
             nn.Linear(1024,num_classes),
@@ -69,8 +67,18 @@ class GoogLeNet(nn.Module):
         out = self.classifier(out)
 
         return out
+    
+    def inception_module(self, *args):
+        blocks = {
+            "v1": Inception_Block_v1(*args),
+            "v2": Inception_Block_v2(),
+            "v3": Inception_Block_v3(),
+            "v4": Inception_Block_v4()
+        }
+
+        return blocks[self.inception_module_version]
 
 
 x = torch.randn(1,3, 224,224)
-net = GoogLeNet(1000, inception_block_version="v1")
+net = GoogLeNet(10, inception_block_version="v1")
 print(net)
