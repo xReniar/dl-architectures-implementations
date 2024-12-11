@@ -6,11 +6,7 @@ This repository contains my implementations using `Pytorch` of the DNN architect
 │   └── architectures
 ├── models
 │   ├── AlexNet
-│   ├── GoogLeNet
-│   ├── LeNet5
-│   ├── NiN
-│   ├── Resnet
-│   └── VGG-16
+│   └── ...
 ├── README.md
 ├── requirements.txt
 └── utils
