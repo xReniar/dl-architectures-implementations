@@ -1,7 +1,7 @@
-from InceptionModule.v1 import Inception_Block_v1
-from InceptionModule.v2 import Inception_Block_v2
-from InceptionModule.v3 import Inception_Block_v3
-from InceptionModule.v4 import Inception_Block_v4
+from InceptionModule.v1 import InceptionModulev1
+from InceptionModule.v2 import InceptionModulev2
+from InceptionModule.v3 import InceptionModulev3
+from InceptionModule.v4 import InceptionModulev4
 from aux_classifier import AuxClassifier
 from torch import nn
 import torch
@@ -56,10 +56,10 @@ class GoogLeNet(nn.Module):
         out = self.inception_3b(out)
         out = self.maxpool3(out)
         out = self.inception_4a(out)
-        out = self.inception_4b(out)
+        out = self.inception_4b(out, self.training)
         out = self.inception_4c(out)
         out = self.inception_4d(out)
-        out = self.inception_4e(out)
+        out = self.inception_4e(out, self.training)
         out = self.maxpool4(out)
         out = self.inception_5a(out)
         out = self.inception_5b(out)
@@ -69,12 +69,12 @@ class GoogLeNet(nn.Module):
 
         return out
     
-    def inception_module(self, *args) -> Inception_Block_v1 | Inception_Block_v2 | Inception_Block_v3 | Inception_Block_v4:
+    def inception_module(self, *args) -> InceptionModulev1 | InceptionModulev2 | InceptionModulev3 | InceptionModulev4:
         blocks = {
-            "v1": Inception_Block_v1(*args),
-            "v2": Inception_Block_v2(),
-            "v3": Inception_Block_v3(),
-            "v4": Inception_Block_v4()
+            "v1": InceptionModulev1(*args),
+            "v2": InceptionModulev2(),
+            "v3": InceptionModulev3(),
+            "v4": InceptionModulev4()
         }
 
         return blocks[self.inception_module_version]
