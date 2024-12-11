@@ -29,11 +29,11 @@ class GoogLeNet(nn.Module):
         self.inception_3a = self.inception_module(192, 64, 96, 128, 16, 32, 32, None)
         self.inception_3b = self.inception_module(256, 128, 128, 192, 32, 96, 64, None)
         self.maxpool3 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-        self.inception_4a = self.inception_module(480, 192, 96, 208, 16,48, 64, None)
-        self.inception_4b = self.inception_module(512, 160, 112,224, 24,64, 64, None)
-        self.inception_4c = self.inception_module(512, 128, 128,256, 24,64, 64, None)
-        self.inception_4d = self.inception_module(512, 112, 144,288, 32,64, 64, None)
-        self.inception_4e = self.inception_module(528, 256, 160,320, 32,128, 128, None)
+        self.inception_4a = self.inception_module(480, 192, 96, 208, 16, 48, 64, None)
+        self.inception_4b = self.inception_module(512, 160, 112, 224, 24, 64, 64, AuxClassifier(512, 128, 1024, num_classes))
+        self.inception_4c = self.inception_module(512, 128, 128, 256, 24, 64, 64, None)
+        self.inception_4d = self.inception_module(512, 112, 144, 288, 32, 64, 64, None)
+        self.inception_4e = self.inception_module(528, 256, 160, 320, 32, 128, 128, AuxClassifier(528, 128, 1024, num_classes))
         self.maxpool4 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.inception_5a = self.inception_module(832, 256, 160,320, 32, 128, 128, None)
         self.inception_5b = self.inception_module(832, 384, 192,384, 48, 128, 128, None)
@@ -69,7 +69,7 @@ class GoogLeNet(nn.Module):
 
         return out
     
-    def inception_module(self, *args):
+    def inception_module(self, *args) -> Inception_Block_v1 | Inception_Block_v2 | Inception_Block_v3 | Inception_Block_v4:
         blocks = {
             "v1": Inception_Block_v1(*args),
             "v2": Inception_Block_v2(),
