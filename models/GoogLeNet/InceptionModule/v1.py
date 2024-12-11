@@ -2,7 +2,7 @@ from torch import nn
 import torch
 
 
-class Inception_Block_v1(nn.Module):
+class InceptionModulev1(nn.Module):
     def __init__(self, *args):
         super().__init__()
         # define features values for every branch
@@ -43,13 +43,13 @@ class Inception_Block_v1(nn.Module):
         self.aux_classifier = args[7]
         self.aux_value = None
 
-    def forward(self, x:torch.Tensor):
+    def forward(self, x:torch.Tensor, mode:bool = False):
         b1_out = self.branch1(x)
         b2_out = self.branch2(x)
         b3_out = self.branch3(x)
         b4_out = self.branch4(x)
         
-        if self.aux_classifier != None:
+        if self.aux_classifier != None and mode:
             self.aux_value = self.aux_classifier(x)
 
         return torch.cat([b1_out, b2_out, b3_out, b4_out], dim=1)

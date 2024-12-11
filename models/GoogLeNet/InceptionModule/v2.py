@@ -2,7 +2,7 @@ from torch import nn
 import torch
 
 
-class Inception_Block_v2(nn.Module):
+class InceptionModulev2(nn.Module):
     def __init__(self):
         super().__init__()
 
