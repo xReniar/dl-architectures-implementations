@@ -40,7 +40,7 @@ class InceptionModulev1(nn.Module):
         return torch.cat([b1_out, b2_out, b3_out, b4_out], dim=1)
 ```
 - as shown in the image 4 branches are defined inside the constructor
-- if needed the `self.aux_classifier` stores the auxiliary classification network, and the `self.aux_value` stores the output of the auxiliary classification
+- if needed the `self.aux_classifier` stores the auxiliary classification network, and the `self.aux_value` stores the output of the auxiliary classifier
 - the `forward()` recieves as parameters the tensor of the previous layer and a `mode` that tells if the `GoogLeNet` is in training mode or evaluation mode. This is convenient because the output is only needed when the `GoogLeNet` is in training mode.
 ## Auxiliary classifier
 The structure of the auxiliary classifier is already shown in the first picture, and it's all shown inside `aux_classifier.py`
