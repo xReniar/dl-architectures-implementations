@@ -43,7 +43,7 @@ class InceptionModulev1(nn.Module):
 - if needed the `self.aux_classifier` stores the auxiliary classification network, and the `self.aux_value` stores the output of the auxiliary classification
 - the `forward()` recieves as parameters the tensor of the previous layer and a `mode` that tells if the `GoogLeNet` is in training mode or evaluation mode. This is convenient because the output is only needed when the `GoogLeNet` is in training mode.
 ## Auxiliary classifier
-The structure of the auxiliary classifier is already shown in the first picture
+The structure of the auxiliary classifier is already shown in the first picture, and it's all shown inside `aux_classifier.py`
 
 ## Implementation
 After implementing the `InceptionModulev1` and the `AuxClassifier`, it's possible now to implement the full network following the iperparameters shown in the second image. Inside the `GoogLeNet` class the inception module is returned with the  `inception_module()` based on the `self.inception_block_version` that is being passed.
