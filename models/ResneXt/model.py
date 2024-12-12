@@ -2,7 +2,7 @@ from torch import nn
 import torch
 
 
-class Resnet(nn.Module):
+class ResneXt(nn.Module):
     def __init__(self):
         super().__init__()
 
