@@ -24,6 +24,7 @@ class InceptionModulev1(nn.Module):
             nn.BatchNorm2d(self._3x3_reduce),
             nn.ReLU(),
             nn.Conv2d(self._3x3_reduce, self._3x3, kernel_size=3, padding=1),
+            nn.BatchNorm2d(self._3x3),
             nn.ReLU()
         )
         self.branch3 = nn.Sequential(
