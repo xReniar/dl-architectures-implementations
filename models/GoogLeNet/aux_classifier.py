@@ -19,6 +19,7 @@ class AuxClassifier(nn.Module):
             nn.Linear(fc_out, num_classes),
             nn.Softmax(dim=1)
         )
+        self.output:torch.Tensor = None
 
     def forward(self, x:torch.Tensor):
         out: torch.Tensor = x
@@ -27,5 +28,7 @@ class AuxClassifier(nn.Module):
         out = out.view(out.size(0), -1)
         out = self.fc1(out)
         out = self.fc2(out)
+
+        self.output = out
         
         return out
