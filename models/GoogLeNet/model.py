@@ -72,14 +72,9 @@ class GoogLeNet(nn.Module):
     def inception_module(self, *args) -> InceptionModulev1 | InceptionModulev2 | InceptionModulev3 | InceptionModulev4:
         blocks = {
             "v1": InceptionModulev1(*args),
-            "v2": InceptionModulev2(),
-            "v3": InceptionModulev3(),
-            "v4": InceptionModulev4()
+            #"v2": InceptionModulev2(*args),
+            #"v3": InceptionModulev3(*args),
+            #"v4": InceptionModulev4(*args)
         }
 
         return blocks[self.inception_module_version]
-
-
-x = torch.randn(1,3, 224,224)
-net = GoogLeNet(10, inception_block_version="v1")
-print(net(x))
