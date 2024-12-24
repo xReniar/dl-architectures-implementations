@@ -21,7 +21,6 @@ class ResidualBlock(nn.Module):
 
         # downsampling if needed
         if (stride != 1) or (in_features != out_features):
-            print(in_features, out_features)
             self.downsample = nn.Sequential(
                 nn.Conv2d(in_features, out_features, kernel_size=1, stride=2),
                 nn.BatchNorm2d(out_features)
