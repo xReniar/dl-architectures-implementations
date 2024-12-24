@@ -14,19 +14,22 @@ class Resnet(nn.Module):
         )
 
         # resnet18
-        #self.conv2_x = self._make_layer(64, 2, [(64, 3), (64, 3)], stride=1)
-        #self.conv3_x = self._make_layer(64, 2, [(128, 3), (128, 3)], stride=2)
-        #self.conv4_x = self._make_layer(128, 2, [(256, 3), (256, 3)], stride=2)
-        #self.conv5_x = self._make_layer(256, 2, [(512, 3), (512, 3)], stride=2)
+        self.conv2_x = self._make_layer(64, 2, [(64, 3), (64, 3)], stride=1)
+        self.conv3_x = self._make_layer(64, 2, [(128, 3), (128, 3)], stride=2)
+        self.conv4_x = self._make_layer(128, 2, [(256, 3), (256, 3)], stride=2)
+        self.conv5_x = self._make_layer(256, 2, [(512, 3), (512, 3)], stride=2)
 
         # resnet34
-        self.conv2_x = self._make_layer(64, 3, [(64, 3), (64, 3)], stride=1)
-        self.conv3_x = self._make_layer(64, 4, [(128, 3), (128, 3)], stride=2)
-        self.conv4_x = self._make_layer(128, 6, [(256, 3), (256, 3)], stride=2)
-        self.conv5_x = self._make_layer(256, 3, [(512, 3), (512, 3)], stride=2)
+        #self.conv2_x = self._make_layer(64, 3, [(64, 3), (64, 3)], stride=1)
+        #self.conv3_x = self._make_layer(64, 4, [(128, 3), (128, 3)], stride=2)
+        #self.conv4_x = self._make_layer(128, 6, [(256, 3), (256, 3)], stride=2)
+        #self.conv5_x = self._make_layer(256, 3, [(512, 3), (512, 3)], stride=2)
 
+        self.gap = nn.AdaptiveAvgPool2d((1,1))
+        
         self.classifier = nn.Sequential(
-            nn.Linear(1024, num_classes)
+            nn.Linear(512, num_classes),
+            nn.Softmax(dim=1)
         )
 
     def _make_layer(self, in_features:int, expansion:int, building_blocks:list, stride:int) -> nn.Sequential:
@@ -48,7 +51,7 @@ class Resnet(nn.Module):
         group_blocks = [group_blocks[i:i+group_size] for i in range(0, len(group_blocks), group_size)]
         return group_blocks
     
-    # il problema è resnet50 in su non fa match
+    # problems with resnet50 and greater architectures
     def _create_in_feature_maps_list(self, in_features, expansion, building_blocks) -> list:
         feature_maps:list = list(map(lambda x: x[0], building_blocks)) * expansion
         feature_maps.pop()
@@ -64,11 +67,8 @@ class Resnet(nn.Module):
         out = self.conv3_x(out)
         out = self.conv4_x(out)
         out = self.conv5_x(out)
+        out = self.gap(out)
+        out = out.view(out.size(0), -1)
+        out = self.classifier(out)
 
         return out
-
-
-image = torch.randn(1, 3, 224, 224)
-net = Resnet(num_classes=10)
-print(net(image).size())
-#print(net)
