@@ -8,6 +8,10 @@ class ResidualBlock(nn.Module):
 
         for i, (block, in_features) in enumerate(zip(blocks, in_features_list)):
             out_features, kernel_size, stride, padding = block
+            # this is for resnet50, resnet101, resnet152
+            if kernel_size == 1:
+                padding = 0
+
             self.add_module(f"conv{i + 1}", nn.Sequential(
                 nn.Conv2d(in_features, out_features, kernel_size=kernel_size, stride=stride, padding=padding),
                 nn.BatchNorm2d(out_features),
@@ -22,7 +26,7 @@ class ResidualBlock(nn.Module):
         # downsampling if needed
         if (stride != 1) or (in_features != out_features):
             self.downsample = nn.Sequential(
-                nn.Conv2d(in_features, out_features, kernel_size=1, stride=2),
+                nn.Conv2d(in_features, out_features, kernel_size=1, stride=stride),
                 nn.BatchNorm2d(out_features)
             )
         else: 
