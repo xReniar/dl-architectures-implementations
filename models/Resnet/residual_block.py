@@ -32,6 +32,8 @@ class ResidualBlock(nn.Module):
         else: 
             self.downsample = None
 
+        self.relu = nn.ReLU()
+
     def forward(self, x):
         # conv layers path
         out:torch.Tensor = x
@@ -46,5 +48,8 @@ class ResidualBlock(nn.Module):
         
         # sum
         out += identity
+
+        #final output
+        out = self.relu(out)
         
         return out
