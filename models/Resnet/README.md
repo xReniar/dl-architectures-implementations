@@ -6,7 +6,10 @@
 The `Resnet` architecture details are shown in this image. To shorten the implementation it's recommended to implement the residual block, the overall implementation generates layers based on a list of (`in_features`, `kernel_size`, `stride`, `padding`) 
 
 ## Residual Block
-The `ResidualBlock` class generates the layer dynamically based on the parameters passed in the constructor (blocks and in_features). The `downsampling` is performed if the input and output channels are not the same and if the stride is greater than 1, this is done to match the width and height of the tensors. In the `forward()` function the input is passed trough every layer except the `downsample` layer. At the end the sum of the input passed trough every conv layer and the input passed trough the residual path are passed in `nn.ReLU()` and forward to the next `ResidualBlock`.
+The `ResidualBlock` class generates the layer dynamically based on the parameters passed in the constructor (blocks and in_features). The `downsampling` is performed if the input and output channels are not the same or if the stride is greater than 1, this is done to match the number of channels of the 2 tensors or to match the width and height of the 2 tensors. In the `forward()` function the input is processed in 2 ways:
+- trough every layer except the `downsample` path.
+- only in the residual path
+At the end the sum of the input passed trough every conv layer and the input passed trough the residual path are passed in `nn.ReLU()` and forward to the next `ResidualBlock`.
 
 ## Implementation
 After implementing the `ResidualBlock` to create every version of the Resnet architecture as shown in the image, 3 functions were made to simplify the building process:
