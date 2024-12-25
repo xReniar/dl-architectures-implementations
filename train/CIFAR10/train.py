@@ -31,8 +31,7 @@ def train_model(model:nn.Module, loss_fn, optimizer:torch.optim.Optimizer, batch
             loss.backward()
             optimizer.step()
 
-            if (i+1) % 400 == 0:
-                print ('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' .format(epoch+1, num_epochs, i+1, total_step, loss.item()))
+            print ('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' .format(epoch+1, num_epochs, i+1, total_step, loss.item()))
     
     # testing
 
@@ -40,13 +39,13 @@ if __name__ == "__main__":
     # define variables
     batch_size = 64
     num_classes = 10
-    lr = 0.001
-    num_epochs = 10
+    lr = 0.005
+    num_epochs = 20
 
     # define hyperparameters
-    model = AlexNet(num_classes)
+    model = AlexNet(num_classes).to(device)
     loss_fn = nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=lr)
+    optimizer = torch.optim.SGD(model.parameters(), lr=lr, weight_decay=0.005, momentum=0.9)
     
     train_model(
         model=model,
