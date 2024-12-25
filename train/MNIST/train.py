@@ -32,7 +32,7 @@ def train_model(model:nn.Module, loss_fn, optimizer:torch.optim.Optimizer, batch
             loss.backward()
             optimizer.step()
 
-            print ('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' .format(epoch+1, num_epochs, i+1, total_step, loss.item()))
+            print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' .format(epoch+1, num_epochs, i+1, total_step, loss.item()))
 
         # testing
         with torch.no_grad():
