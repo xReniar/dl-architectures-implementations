@@ -42,8 +42,7 @@ class GoogLeNet(nn.Module):
             nn.Dropout(p=0.4, inplace=True)
         )
         self.classifier = nn.Sequential(
-            nn.Linear(1024,num_classes),
-            nn.Softmax(dim=1)
+            nn.Linear(1024,num_classes)
         )
 
     def forward(self, x:torch.Tensor):

@@ -38,8 +38,7 @@ class AlexNet(nn.Module):
             nn.ReLU(inplace=True)
         )
         self.fc3 = nn.Sequential(
-            nn.Linear(4096, num_classes),
-            nn.Softmax(dim=1)
+            nn.Linear(4096, num_classes)
         )
 
     def forward(self, x:torch.Tensor):

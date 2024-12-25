@@ -45,8 +45,7 @@ class Resnet(nn.Module):
         self.gap = nn.AdaptiveAvgPool2d((1,1))
         
         self.classifier = nn.Sequential(
-            nn.Linear(512 * (4 if layers > 34 else 1), num_classes),
-            nn.Softmax(dim=1)
+            nn.Linear(512 * (4 if layers > 34 else 1), num_classes)
         )
 
     def _make_layer(self, in_features:int, expansion:int, building_blocks:list, stride:int) -> nn.Sequential:
