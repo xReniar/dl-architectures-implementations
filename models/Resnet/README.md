@@ -9,6 +9,7 @@ The `Resnet` architecture details are shown in this image. To shorten the implem
 The `ResidualBlock` class generates the layer dynamically based on the parameters passed in the constructor (blocks and in_features). The `downsampling` is performed if the input and output channels are not the same or if the stride is greater than 1, this is done to match the number of channels of the 2 tensors or to match the width and height of the 2 tensors. In the `forward()` function the input is processed in 2 ways:
 - trough every layer except the `downsample` path.
 - only in the residual path
+
 At the end the sum of the input passed trough every conv layer and the input passed trough the residual path are passed in `nn.ReLU()` and forward to the next `ResidualBlock`.
 
 ## Implementation
