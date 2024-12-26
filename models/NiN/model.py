@@ -17,11 +17,11 @@ class NiN(nn.Module):
         super().__init__()
         self.num_classes = num_classes
         # first block
-        self.nin_block1 = NiN_block(in_features=3, out_features=[384, 192, 96], kernel_size=5, stride=1, padding=2)
+        self.nin_block1 = NiN_block(in_features=3, out_features=[192, 160, 96], kernel_size=5, stride=1, padding=2)
         self.pool1 = nn.MaxPool2d(kernel_size=3,stride=2, padding=1)
 
         # second block
-        self.nin_block2 = NiN_block(in_features=96, out_features=[384, 192, 192], kernel_size=5, stride=1, padding=2)
+        self.nin_block2 = NiN_block(in_features=96, out_features=[192, 192, 192], kernel_size=5, stride=1, padding=2)
         self.pool2 = nn.MaxPool2d(kernel_size=3,stride=2, padding=1)
 
         # third block
