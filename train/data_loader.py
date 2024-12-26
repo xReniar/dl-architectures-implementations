@@ -5,6 +5,7 @@ import torchvision.transforms as transforms
 DATASET_CLASSES = {
     "CIFAR10": torchvision.datasets.CIFAR10,
     "FashionMNIST": torchvision.datasets.FashionMNIST,
+    "ImageNet": torchvision.datasets.ImageNet,
     "MNIST": torchvision.datasets.MNIST
 }
 
