@@ -1,18 +1,18 @@
 # NiN
 <div style="text-align: center;">
-    <img src="../../docs/architectures/NiN.png" alt="NiN architecture" width="75%">
+    <img src="../../docs/architectures/NiN.png" alt="NiN architecture" width="50%">
 </div>
 
 ## Implementation
 As it's shown in the image this architecture have more repeated blocks called `NiN-block`, this is implemented with this function:
 ```python
-def NiN_block(in_features:int, out_features:int, kernel_size:int, stride:int = 1, padding:int = 0):
+def NiN_block(in_features:int, out_features:list, kernel_size:int, stride:int = 1, padding:int = 0):
     return nn.Sequential(
-        nn.Conv2d(in_features, out_features, kernel_size=kernel_size, stride=stride, padding=padding),
+        nn.Conv2d(in_features, out_features[0], kernel_size=kernel_size, stride=stride, padding=padding),
         nn.ReLU(),
-        nn.Conv2d(out_features, out_features, kernel_size=1),
+        nn.Conv2d(out_features[0], out_features[1], kernel_size=1),
         nn.ReLU(),
-        nn.Conv2d(out_features, out_features, kernel_size=1),
+        nn.Conv2d(out_features[1], out_features[2], kernel_size=1),
         nn.ReLU()
     )
 ```
