@@ -13,9 +13,9 @@ class ResidualBlock(nn.Module):
                 padding = 0
 
             self.add_module(f"conv{i + 1}", nn.Sequential(
-                nn.Conv2d(in_features, out_features, kernel_size=kernel_size, stride=stride, padding=padding),
+                nn.Conv2d(in_features, out_features, kernel_size=kernel_size, stride=stride, padding=padding, bias=False),
                 nn.BatchNorm2d(out_features),
-                nn.ReLU()
+                nn.ReLU(inplace=True)
             ))
 
         # info needed for residual path
@@ -26,30 +26,30 @@ class ResidualBlock(nn.Module):
         # downsampling if needed
         if (stride != 1) or (in_features != out_features):
             self.downsample = nn.Sequential(
-                nn.Conv2d(in_features, out_features, kernel_size=1, stride=stride),
+                nn.Conv2d(in_features, out_features, kernel_size=1, stride=stride, bias=False),
                 nn.BatchNorm2d(out_features)
             )
         else: 
             self.downsample = None
 
-        self.relu = nn.ReLU()
+        self.relu = nn.ReLU(inplace=True)
 
-    def forward(self, x):
+    def forward(self, x:torch.Tensor):
+        identity:torch.Tensor = x.clone()
         # conv layers path
-        out:torch.Tensor = x
         for name, module in self.named_children():
-            if name != "downsample":
-                out = module(out)
+            if name.startswith("conv"):
+                x = module(x)
 
         # residual path
-        identity:torch.Tensor = x
         if self.downsample != None:
             identity = self.downsample(identity)
         
         # sum
-        out += identity
+        # this will get RuntimeError so it's better not using it
+        # x += identity
 
         #final output
-        out = self.relu(out)
+        x = self.relu(x + identity)
         
-        return out
+        return x
