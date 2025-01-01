@@ -5,6 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from data_loader import get_dataloader
 from models.AlexNet.model import AlexNet
+from models.Resnet.model import Resnet
 from torch import nn
 import torch
 
@@ -13,7 +14,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 def train_model(model:nn.Module, loss_fn, optimizer:torch.optim.Optimizer, batch_size:int, num_epochs:int):
     # get dataloaders
-    train_loader, test_loader = get_dataloader("CIFAR10",batch_size, (227,227))
+    train_loader, test_loader = get_dataloader("CIFAR10",batch_size, (224,224))
 
     total_step = len(train_loader)
     for epoch in range(num_epochs):
@@ -31,7 +32,8 @@ def train_model(model:nn.Module, loss_fn, optimizer:torch.optim.Optimizer, batch
             loss.backward()
             optimizer.step()
 
-            print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' .format(epoch+1, num_epochs, i+1, total_step, loss.item()))
+            if i % 10 == 0:
+                print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' .format(epoch+1, num_epochs, i+1, total_step, loss.item()))
 
         # testing
         with torch.no_grad():
@@ -49,13 +51,14 @@ def train_model(model:nn.Module, loss_fn, optimizer:torch.optim.Optimizer, batch
 
 if __name__ == "__main__":
     # define variables
-    batch_size = 64
+    batch_size = 32
     num_classes = 10
-    lr = 0.005
+    lr = 0.001
     num_epochs = 20
 
     # define hyperparameters
-    model = AlexNet(num_classes).to(device)
+    #model = Resnet(34, num_classes).to(device)
+    model = AlexNet(num_classes).to(device) 
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=lr, weight_decay=0.005, momentum=0.9)
     
