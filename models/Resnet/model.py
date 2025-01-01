@@ -1,4 +1,4 @@
-from residual_block import ResidualBlock
+from .residual_block import ResidualBlock
 from torch import nn
 import torch
     
@@ -8,7 +8,8 @@ class Resnet(nn.Module):
         super().__init__()
 
         self.conv1 = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3),
+            nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3, bias=False),
+            nn.BatchNorm2d(64),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         )
