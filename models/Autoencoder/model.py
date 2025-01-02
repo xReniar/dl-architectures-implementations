@@ -7,8 +7,8 @@ import recurrent
 class Autoencoder(nn.Module):
     def __init__(self):
         super().__init__()
-        self.encoder:nn.Module = None
-        self.decoder:nn.Module = None
+        self.encoder = None
+        self.decoder = None
 
     def forward(self, x:torch.Tensor):
         x = self.encoder(x)
