@@ -3,7 +3,7 @@ import torch
 
 
 class ResNeXtBlock(nn.Module):
-    def __init__(self, in_features:int, out_features:int, groups: int, cardinality:int, stride:int):
+    def __init__(self, in_features:int, out_features:int, cardinality:int, groups:int, stride:int):
         super().__init__()
 
         intermediate_channels = int(out_features / 2)

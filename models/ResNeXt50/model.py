@@ -4,7 +4,7 @@ import torch
 
 
 class ResNeXt50(nn.Module):
-    def __init__(self, cardinality: int, num_classes: int) -> None :
+    def __init__(self, cardinality:int, groups_width:int, num_classes: int) -> None :
         super().__init__()
 
         self.conv1 = nn.Sequential(
@@ -44,8 +44,3 @@ class ResNeXt50(nn.Module):
         x = self.classifier(x)
 
         return x
-    
-image = torch.randn(1, 3, 224, 224)
-net = ResNeXt50(32, 10)
-
-print(net)
