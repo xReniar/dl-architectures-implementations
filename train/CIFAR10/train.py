@@ -6,6 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from data_loader import get_dataloader
 from models.AlexNet.model import AlexNet
 from models.Resnet.model import Resnet
+from models.ResNeXt50.model import ResNeXt50
 from torch import nn
 import torch
 
@@ -51,14 +52,15 @@ def train_model(model:nn.Module, loss_fn, optimizer:torch.optim.Optimizer, batch
 
 if __name__ == "__main__":
     # define variables
-    batch_size = 32
+    batch_size = 16
     num_classes = 10
     lr = 0.001
     num_epochs = 20
 
     # define hyperparameters
     #model = Resnet(34, num_classes).to(device)
-    model = AlexNet(num_classes).to(device) 
+    #model = AlexNet(num_classes).to(device) 
+    model = ResNeXt50(32, 4, 10).to(device)
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=lr, weight_decay=0.005, momentum=0.9)
     
