@@ -13,7 +13,7 @@ class ResNeXt50(nn.Module):
             nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3, bias=False),
             nn.BatchNorm2d(64),
             nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=3, stride=2)
+            nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         )
 
         self.conv2 = self._make_layer(64, 256, 3)
@@ -46,13 +46,3 @@ class ResNeXt50(nn.Module):
         x = self.classifier(x)
 
         return x
-    
-'''
-def visualize_model():
-    from torchviz import make_dot
-    
-    model = ResNeXt50(32, 4, 10)
-    inputs = torch.randn(1, 3, 224, 224)
-    y = model(inputs)
-    make_dot(y, params=dict(model.named_parameters())).render("model", format="png")
-'''
