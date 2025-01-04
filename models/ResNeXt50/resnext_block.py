@@ -6,7 +6,7 @@ class ResNeXtBlock(nn.Module):
     def __init__(self, in_features:int, out_features:int, cardinality:int, groups:int, stride:int):
         super().__init__()
 
-        intermediate_channels = int(out_features / 2)
+        intermediate_channels = out_features // 2
 
         self.conv1 = nn.Sequential(
             nn.Conv2d(in_features, intermediate_channels, kernel_size=1, bias=False),
