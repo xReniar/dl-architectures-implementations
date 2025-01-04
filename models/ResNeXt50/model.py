@@ -1,4 +1,4 @@
-from resnext_block import ResNeXtBlock
+from .resnext_block import ResNeXtBlock
 from torch import nn
 import torch
 
@@ -6,6 +6,8 @@ import torch
 class ResNeXt50(nn.Module):
     def __init__(self, cardinality:int, groups_width:int, num_classes: int) -> None :
         super().__init__()
+        self.cardinality = cardinality
+        self.grous_width = groups_width
 
         self.conv1 = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3, bias=False),
@@ -14,21 +16,21 @@ class ResNeXt50(nn.Module):
             nn.MaxPool2d(kernel_size=3, stride=2)
         )
 
-        self.conv2 = self._make_layer(64, 256, 3, cardinality)
-        self.conv3 = self._make_layer(256, 512, 4, cardinality)
-        self.conv4 = self._make_layer(512, 1024, 6, cardinality)
-        self.conv5 = self._make_layer(1024, 2048, 3, cardinality)
+        self.conv2 = self._make_layer(64, 256, 3)
+        self.conv3 = self._make_layer(256, 512, 4)
+        self.conv4 = self._make_layer(512, 1024, 6)
+        self.conv5 = self._make_layer(1024, 2048, 3)
 
         self.gap = nn.AdaptiveAvgPool2d((1,1))
         self.classifier = nn.Linear(2048, num_classes)
 
-    def _make_layer(self, in_features:int, out_features:int, expansion:int, cardinality:int):
+    def _make_layer(self, in_features:int, out_features:int, expansion:int):
         layers = []
         in_current = in_features
-        layers.append(ResNeXtBlock(in_current, out_features, 0, cardinality, 2))
+        layers.append(ResNeXtBlock(in_current, out_features, self.cardinality, self.grous_width, 2))
         in_current = out_features
         for _ in range(0, expansion - 1):
-            layers.append(ResNeXtBlock(in_current, out_features, 0, cardinality, 1))
+            layers.append(ResNeXtBlock(in_current, out_features, self.cardinality, self.grous_width, 1))
 
         return nn.Sequential(*layers)
 
