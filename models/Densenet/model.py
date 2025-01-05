@@ -79,8 +79,3 @@ def densenet_201(num_classes:int):
 def densenet_264(num_classes:int):
     expansions = [6, 12, 64, 48]
     return DenseNet(expansions, num_classes)
-
-
-image = torch.randn(1, 3, 224, 224)
-net = densenet_121(10)
-print(net(image).size())
