@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from data_loader import get_dataloader
 from models.AlexNet.model import AlexNet
-from models.Resnet.model import Resnet
+from models.Resnet.model import resnet18, resnet34, resnet50, resnet101, resnet152
 from models.ResNeXt50.model import ResNeXt50
 from torch import nn
 import torch
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     num_epochs = 20
 
     # define hyperparameters
-    #model = Resnet(34, num_classes).to(device)
+    #model = resnet34(num_classes).to(device)
     #model = AlexNet(num_classes).to(device) 
     model = ResNeXt50(32, 4, 10).to(device)
     loss_fn = nn.CrossEntropyLoss()
