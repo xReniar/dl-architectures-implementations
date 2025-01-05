@@ -1,4 +1,4 @@
-from residual_block import ResidualBlock
+from .residual_block import ResidualBlock
 from torch import nn
 import torch
     
