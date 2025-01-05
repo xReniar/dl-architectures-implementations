@@ -65,17 +65,13 @@ class DenseNet(nn.Module):
     
 
 def densenet_121(num_classes:int):
-    expansions = [6, 12, 24, 16]
-    return DenseNet(expansions, num_classes)
+    return DenseNet([6, 12, 24, 16], num_classes)
 
 def densenet_169(num_classes:int):
-    expansions = [6, 12, 32, 32]
-    return DenseNet(expansions, num_classes)
+    return DenseNet([6, 12, 32, 32], num_classes)
 
 def densenet_201(num_classes:int):
-    expansions = [6, 12, 48, 32]
-    return DenseNet(expansions, num_classes)
+    return DenseNet([6, 12, 48, 32], num_classes)
 
 def densenet_264(num_classes:int):
-    expansions = [6, 12, 64, 48]
-    return DenseNet(expansions, num_classes)
+    return DenseNet([6, 12, 64, 48], num_classes)
