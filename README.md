@@ -1,5 +1,10 @@
-# DL Architectures Implementations
-[![techused](https://skillicons.dev/icons?i=py,pytorch)](https://skillicons.dev)
+# DL Architectures Implementations 
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=git,py,pytorch" />
+  </a>
+</p>
+
 This repository contains my implementations using `Pytorch` of the DNN architectures that were introduced in the Deep Learning Course at Roma Tre University. Below is illustrated the structure of this project:
 ```txt
 .
