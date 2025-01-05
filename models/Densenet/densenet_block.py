@@ -3,39 +3,49 @@ import torch
 
 
 class DenseLayer(nn.Module):
-    def __init__(self, in_features, out_features, growth_rate):
+    def __init__(self,
+        in_features: int,
+        growth_rate: int
+    ) -> None:
         super().__init__()
         self.conv1 = nn.Sequential(
             nn.BatchNorm2d(in_features),
             nn.ReLU(inplace=True),
-            nn.Conv2d(in_features, 4 * growth_rate, kernel_size=1, stride=1, padding=1),
+            nn.Conv2d(in_features, growth_rate, kernel_size=1, stride=1, padding=1),
         )
         self.conv2 = nn.Sequential(
-            nn.BatchNorm2d(4 * growth_rate),
+            nn.BatchNorm2d(growth_rate),
             nn.ReLU(inplace=True),
-            nn.Conv2d(4 * growth_rate, growth_rate, kernel_size=3, stride=1),
+            nn.Conv2d(growth_rate, growth_rate, kernel_size=3, stride=1),
         )
 
     def forward(self, x:torch.Tensor):
-        pass
+        x = self.conv1(x)
+        x = self.conv2(x)
+
+        return x
 
 
 class DenseBlock(nn.Module):
-    def __init__(self, in_features, out_features, expansion):
+    def __init__(self,
+        in_features: int,
+        expansion: int, 
+        growth_rate: int
+    ) -> None:
         super().__init__()
-        self.dense_layers = []
-
-        for _ in range(0, expansion):
-            self.dense_layers.append(
-                nn.Sequential(
-                    nn.BatchNorm2d(),
-                    nn.ReLU(inplace=True),
-                    nn.Conv2d(),
-                    nn.BatchNorm2d(),
-                    nn.ReLU(inplace=True),
-                    nn.Conv2d()
-                )
-            )
+        for i in range(0, expansion):
+            self.add_module(str(i), DenseLayer(in_features, growth_rate))
+            in_features += growth_rate
 
     def forward(self, x:torch.Tensor):
+        processed = [x]
+        for children in self.children():
+            # get the output of the current dense layer
+            x = children(x)
+
+            # add it to the processed list
+            processed.append(x)
+
+            # concatenate by features 
+            x = torch.cat(processed, dim=1)
         return x
