@@ -1,14 +1,14 @@
+from encoder import Encoder
+from decoder import Decoder
 from torch import nn
 import torch
-import convolutional
-import recurrent
 
 
 class Autoencoder(nn.Module):
     def __init__(self):
         super().__init__()
-        self.encoder = None
-        self.decoder = None
+        self.encoder = Encoder()
+        self.decoder = Decoder()
 
     def forward(self, x:torch.Tensor):
         x = self.encoder(x)

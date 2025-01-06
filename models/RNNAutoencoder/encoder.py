@@ -5,14 +5,11 @@ import torch
 class Encoder(nn.Module):
     def __init__(self):
         super().__init__()
+        self.mlp = None
+        self.rnn = None
 
     def forward(self, x:torch.Tensor):
-        return x
+        x = self.mlp(x)
+        x = self.rnn(x)
 
-
-class Decoder(nn.Module):
-    def __init__(self):
-        super().__init__()
-
-    def forward(self, x:torch.Tensor):
         return x
