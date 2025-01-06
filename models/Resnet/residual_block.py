@@ -6,17 +6,21 @@ class ResidualBlock(nn.Module):
     def __init__(self, blocks:list, in_features_list:list):
         super().__init__()
 
-        for i, (block, in_features) in enumerate(zip(blocks, in_features_list)):
+        self.layers = nn.ModuleList()
+
+        for block, in_features in zip(blocks, in_features_list):
             out_features, kernel_size, stride, padding = block
             # this is for resnet50, resnet101, resnet152
             if kernel_size == 1:
                 padding = 0
 
-            self.add_module(f"conv{i + 1}", nn.Sequential(
-                nn.Conv2d(in_features, out_features, kernel_size=kernel_size, stride=stride, padding=padding, bias=False),
-                nn.BatchNorm2d(out_features),
-                nn.ReLU(inplace=True)
-            ))
+            self.layers.append(
+                nn.Sequential(
+                    nn.Conv2d(in_features, out_features, kernel_size=kernel_size, stride=stride, padding=padding, bias=False),
+                    nn.BatchNorm2d(out_features),
+                    nn.ReLU(inplace=True)
+                )
+            )
 
         # info needed for residual path
         stride = blocks[0][2]
@@ -37,9 +41,8 @@ class ResidualBlock(nn.Module):
     def forward(self, x:torch.Tensor):
         identity:torch.Tensor = x.clone()
         # conv layers path
-        for name, module in self.named_children():
-            if name.startswith("conv"):
-                x = module(x)
+        for layer in self.layers:
+            x = layer(x)
 
         # residual path
         if self.downsample != None:
