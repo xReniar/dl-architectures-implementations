@@ -1,6 +1,6 @@
 # Resnet
 <div style="text-align: center;">
-    <img src="../../docs/architectures/Resnet.png" alt="Resnet architecture" width="75%">
+    <img src="../../../docs/architectures/Resnet.png" alt="Resnet architecture" width="75%">
 </div>
 
 The `Resnet` architecture details are shown in this image. To shorten the implementation it's recommended to implement the residual block, the overall implementation generates layers based on a list of (`in_features`, `kernel_size`, `stride`, `padding`) 
