@@ -1,6 +1,6 @@
 # AlexNet
 <div style="text-align: center;">
-    <img src="../../docs/architectures/AlexNet.png" alt="AlexNet architecture" width="75%">
+    <img src="../../../docs/architectures/AlexNet.png" alt="AlexNet architecture" width="75%">
 </div>
 
 ## Implementation
