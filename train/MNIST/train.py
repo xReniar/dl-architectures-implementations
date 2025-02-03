@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from data_loader import get_dataloader
-from models.LeNet5.model import LeNet5
+from models.LeNet5.pytorch.model import LeNet5
 from torch import nn
 import torch
 

@@ -4,9 +4,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from data_loader import get_dataloader
-from models.AlexNet.model import AlexNet
-from models.Resnet.model import resnet18, resnet34, resnet50, resnet101, resnet152
-from models.ResNeXt50.model import ResNeXt50
+from models.AlexNet.pytorch.model import AlexNet
+from models.Resnet.pytorch.model import resnet18, resnet34, resnet50, resnet101, resnet152
+from models.ResNeXt50.pytorch.model import ResNeXt50
 from torch import nn
 import torch
 

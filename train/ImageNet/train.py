@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from data_loader import get_dataloader
-from models.NiN.model import NiN
+from models.NiN.pytorch.model import NiN
 from torch import nn
 import torch
 
