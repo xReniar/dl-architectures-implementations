@@ -1,6 +1,6 @@
 # NiN
 <div style="text-align: center;">
-    <img src="../../docs/architectures/NiN.png" alt="NiN architecture" width="50%">
+    <img src="../../../docs/architectures/NiN.png" alt="NiN architecture" width="50%">
 </div>
 
 ## Implementation
