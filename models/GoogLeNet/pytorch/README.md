@@ -1,16 +1,16 @@
 # GoogLeNet v1
 <div style="text-align: center;">
-    <img src="../../docs/architectures/GoogLeNet/GoogLeNet_v1.png" alt="GoogLeNetV1 architecture" width="100%">
+    <img src="../../../docs/architectures/GoogLeNet/GoogLeNet_v1.png" alt="GoogLeNetV1 architecture" width="100%">
 </div>
 
 The `GoogLeNet` architecture is very long to implement, is it recommended to implement the inception block and auxiliary classifier first to shorten the implementation of the `GoogLeNet` class. The image below shows an overview of the network, with kernel size, stride and more information. There are 4 version of inception block at the moment only the `v1` is implemented. Inside the `InceptionModule` folder there are the implementation of the 4 version of the inception block.
 <div style="text-align: center;">
-    <img src="../../docs/architectures/GoogLeNet/Inception-layer-by-layer.png" alt="GoogLeNetV1 overview network" width="75%">
+    <img src="../../../docs/architectures/GoogLeNet/Inception-layer-by-layer.png" alt="GoogLeNetV1 overview network" width="75%">
 </div>
 
 ## Inception block (v1)
 <div style="text-align: center;">
-    <img src="../../docs/architectures/GoogLeNet/InceptionModulev1.png" alt="InceptionV1 block" width="50%">
+    <img src="../../../docs/architectures/GoogLeNet/InceptionModulev1.png" alt="InceptionV1 block" width="50%">
 </div>
 
 In this image is represented the first version of the inception module, to implement it the `InceptionModulev1` class has this structure:
