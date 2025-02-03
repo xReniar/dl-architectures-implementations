@@ -33,7 +33,7 @@ def train_model(model:nn.Module, loss_fn, optimizer:torch.optim.Optimizer, batch
             loss.backward()
             optimizer.step()
 
-            if i % 10 == 0:
+            if i % 100 == 0:
                 print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' .format(epoch+1, num_epochs, i+1, total_step, loss.item()))
 
         # testing
@@ -52,15 +52,15 @@ def train_model(model:nn.Module, loss_fn, optimizer:torch.optim.Optimizer, batch
 
 if __name__ == "__main__":
     # define variables
-    batch_size = 16
+    batch_size = 30
     num_classes = 10
     lr = 0.001
     num_epochs = 20
 
     # define hyperparameters
-    #model = resnet34(num_classes).to(device)
+    model = resnet101(num_classes).to(device)
     #model = AlexNet(num_classes).to(device) 
-    model = ResNeXt50(32, 4, 10).to(device)
+    #model = ResNeXt50(32, 4, 10).to(device)
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=lr, weight_decay=0.005, momentum=0.9)
     
