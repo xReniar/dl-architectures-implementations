@@ -13,7 +13,7 @@ def AlexNet(num_classes):
 
 
         layers.ZeroPadding2D(padding=2),
-        layers.Conv2D(256, kernel_size=3, strides=1, use_bias=False),
+        layers.Conv2D(256, kernel_size=5, strides=1, use_bias=False),
         layers.BatchNormalization(),
         layers.ReLU(),
         layers.MaxPooling2D(pool_size=3, strides=2),
