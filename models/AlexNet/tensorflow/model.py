@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras
-from tensorflow.keras import layers
+from keras import layers
 
 
 def AlexNet(num_classes):
@@ -12,23 +12,27 @@ def AlexNet(num_classes):
         layers.MaxPooling2D(pool_size=3, strides=2),
 
 
-        layers.Conv2D(256, kernel_size=3, strides=1, padding=2, use_bias=False),
+        layers.ZeroPadding2D(padding=2),
+        layers.Conv2D(256, kernel_size=3, strides=1, use_bias=False),
         layers.BatchNormalization(),
         layers.ReLU(),
         layers.MaxPooling2D(pool_size=3, strides=2),
 
 
-        layers.Conv2D(384, kernel_size=3, strides=1, padding=1, use_bias=False),
+        layers.ZeroPadding2D(padding=1),
+        layers.Conv2D(384, kernel_size=3, strides=1, use_bias=False),
         layers.BatchNormalization(),
         layers.ReLU(),
 
 
-        layers.Conv2D(384, kernel_size=3, strides=1, padding=1, use_bias=False),
+        layers.ZeroPadding2D(padding=1),
+        layers.Conv2D(384, kernel_size=3, strides=1, use_bias=False),
         layers.BatchNormalization(),
         layers.ReLU(),
 
 
-        layers.Conv2D(256, kernel_size=3, strides=1, padding=1, use_bias=False),
+        layers.ZeroPadding2D(padding=1),
+        layers.Conv2D(256, kernel_size=3, strides=1, use_bias=False),
         layers.BatchNormalization(),
         layers.ReLU(),
         layers.MaxPooling2D(pool_size=3, strides=2),
