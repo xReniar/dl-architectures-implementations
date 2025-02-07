@@ -41,12 +41,12 @@ def AlexNet(num_classes):
         layers.Flatten(),
 
         
-        layers.Dropout(0.5),
         layers.Dense(4096, activation='relu'),
+        layers.Dropout(0.5),
 
 
-        layers.Dropout(0.5),
         layers.Dense(4096, activation='relu'),
+        layers.Dropout(0.5),
         
         
         layers.Dense(4096, activation='relu'),
