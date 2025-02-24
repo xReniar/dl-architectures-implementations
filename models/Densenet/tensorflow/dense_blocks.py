@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras
-from keras import layers, Model, Input
+from keras import layers
 
 
 
@@ -27,6 +27,6 @@ def dense_block(x, num_layers, growth_rate):
 def transition_block(x, reduction):
     filters = int(tf.keras.backend.int_shape(x)[-1] * reduction)
     x = layers.BatchNormalization()(x)
-    x = layers.Conv2D(filters, (1, 1), padding='same')(x)
+    x = layers.Conv2D(filters, (1, 1), strides=2, padding='same')(x)
     x = layers.AveragePooling2D((2, 2), strides=2, padding='same')(x)
     return x
