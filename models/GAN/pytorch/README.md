@@ -1,5 +1,0 @@
-# GAN
-
-## Generator
-
-## Discriminator
