@@ -4,7 +4,7 @@ from torch import nn
 import torch
 
 
-class Autoencoder(nn.Module):
+class CAE(nn.Module):
     def __init__(self):
         super().__init__()
         self.encoder = Encoder()
