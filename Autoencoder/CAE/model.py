@@ -1,5 +1,3 @@
-from encoder import Encoder
-from decoder import Decoder
 from torch import nn
 import torch
 
