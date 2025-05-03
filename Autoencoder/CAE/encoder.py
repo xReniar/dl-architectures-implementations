@@ -5,6 +5,31 @@ import torch
 class Encoder(nn.Module):
     def __init__(self):
         super().__init__()
+        self.conv1 = self.conv_layer(1, 32, 2, 2)
+        self.conv2 = self.conv_layer(32, 64, 2, 2)
+        self.conv3 = self.conv_layer(64, 128, 3, 2)
+
+        self.bottleneck = nn.Linear(1152, 10)
+
+    def conv_layer(
+        self,
+        in_channels: int,
+        out_channels: int,
+        kernel_size: int,
+        stride: int,
+        padding: int = 0
+    ) -> nn.Sequential:
+        return nn.Sequential(
+            nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding, bias=False),
+            nn.BatchNorm2d(out_channels),
+            nn.ReLU(inplace=True)
+        )
 
     def forward(self, x:torch.Tensor):
-        pass
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.conv3(x)
+        x = torch.flatten(x, 1)
+        x = self.bottleneck(x)
+
+        return x
