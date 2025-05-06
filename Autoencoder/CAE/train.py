@@ -72,7 +72,7 @@ images, _ = next(test_iter)
 images = images.to(device)
 recon = model(images).detach().cpu()
 
-# Mostra originali e ricostruite
+# Show originals and reconstruced images
 n = 10
 plt.figure(figsize=(20, 4))
 for i in range(n):
