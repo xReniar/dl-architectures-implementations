@@ -35,7 +35,7 @@ generator_feature_maps_size = 64
 discriminator_feature_maps_size = 64
 
 dset = dataset.ImageFolder(
-    root = "data/celeba",
+    root = "../data/celeba",
     transforms = transforms.Compose([
         transforms.Resize(image_size),
         transforms.CenterCrop(image_size),
