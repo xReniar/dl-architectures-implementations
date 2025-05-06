@@ -3,3 +3,4 @@ torchaudio
 torchvision
 torchviz
 torch-summary
+matplotlib
