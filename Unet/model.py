@@ -16,8 +16,3 @@ class UNet(nn.Module):
         x = self.decoder(x, skip_values)
 
         return x
-
-
-model = UNet()
-x = torch.randn(1, 1, 572, 572)
-print(model(x).shape)
