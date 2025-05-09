@@ -53,7 +53,7 @@ test_loader = torch.utils.data.DataLoader(
     shuffle=True
 )
 
-model = Resnet18(num_classes)
+model = Resnet18(num_classes).to(device)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(
     params = model.parameters(),
