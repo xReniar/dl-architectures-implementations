@@ -7,13 +7,13 @@ class AuxClassifier(nn.Module):
         super().__init__()
         self.avgpool = nn.AvgPool2d(kernel_size=5, stride=3)
         self.conv = nn.Sequential(
-            nn.Conv2d(in_features, conv_out, kernel_size=1, stride=1),
+            nn.Conv2d(in_features, conv_out, kernel_size=1, stride=1, bias=False),
             nn.BatchNorm2d(conv_out),
-            nn.ReLU()
+            nn.ReLU(True)
         )
         self.fc1 = nn.Sequential(
             nn.Linear(2048, fc_out),
-            nn.ReLU()
+            nn.ReLU(True)
         )
         self.fc2 = nn.Sequential(
             nn.Linear(fc_out, num_classes),
