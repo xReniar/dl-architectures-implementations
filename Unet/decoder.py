@@ -11,23 +11,17 @@ def ConvBlocks(
 ) -> nn.Sequential:
     layers = nn.Sequential()
     for i in range(0, 2):
-        current_out_channels = out_channels if i == 1 else in_channels
         layers.append(nn.Sequential(
             nn.Conv2d(
-                in_channels=in_channels,
-                out_channels=current_out_channels,
+                in_channels=in_channels if i == 0 else out_channels,
+                out_channels=out_channels,
                 kernel_size=kernel_size,
                 padding=padding,
                 stride=stride,
                 bias=False
             ),
-            nn.BatchNorm2d(current_out_channels),
-            nn.ReLU(inplace=True),
-            nn.ConvTranspose2d(
-                current_out_channels,
-                current_out_channels,
-                kernel_size=3
-            )
+            nn.BatchNorm2d(out_channels),
+            nn.ReLU(inplace=True)
         ))
     return layers
 
@@ -37,18 +31,17 @@ def copy_and_crop(source: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
     return source[:, :, diff_y // 2 : diff_y // 2 + target.size(2),
                         diff_x // 2 : diff_x // 2 + target.size(3)]
 
-
 class Decoder(nn.Module):
     def __init__(self):
         super().__init__()
 
-        self.upconv4 = nn.ConvTranspose2d(1024, 512, kernel_size=2, stride=2, padding=2)
+        self.upconv4 = nn.ConvTranspose2d(1024, 512, kernel_size=2, stride=2)
         self.conv4 = ConvBlocks(1024, 512)
-        self.upconv3 = nn.ConvTranspose2d(512, 256, kernel_size=2, stride=2, padding=2)     
+        self.upconv3 = nn.ConvTranspose2d(512, 256, kernel_size=2, stride=2)     
         self.conv3 = ConvBlocks(512, 256)
-        self.upconv2 = nn.ConvTranspose2d(256, 128, kernel_size=2, stride=2, padding=2)
+        self.upconv2 = nn.ConvTranspose2d(256, 128, kernel_size=2, stride=2)
         self.conv2 = ConvBlocks(256, 128)
-        self.upconv1 = nn.ConvTranspose2d(128, 64, kernel_size=2, stride=2, padding=2)
+        self.upconv1 = nn.ConvTranspose2d(128, 64, kernel_size=2, stride=2)
         self.conv1 = ConvBlocks(128, 64)
 
         self.head = nn.Conv2d(64, 2, kernel_size=1)
