@@ -50,9 +50,9 @@ test_loader = torch.utils.data.DataLoader(
     shuffle=True
 )
 
-model = GoogLeNet(10, "v1")
+model = GoogLeNet(10, "v1").to(device)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model, lr)
+optimizer = optim.Adam(model.parameters(), lr)
 
 total_step = len(train_loader)
 for epoch in range(num_epochs):
