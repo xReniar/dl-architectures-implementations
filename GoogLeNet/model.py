@@ -12,16 +12,16 @@ class GoogLeNet(nn.Module):
         super().__init__()
         self.inception_module_version = inception_block_version
         self.conv1 = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=7,stride=2, padding=3),
+            nn.Conv2d(3, 64, kernel_size=7,stride=2, padding=3, bias=False),
             nn.BatchNorm2d(64),
             nn.ReLU(inplace=True)
         )
         self.maxpool1 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.conv2 = nn.Sequential(
-            nn.Conv2d(64, 64, kernel_size=1, stride=1, padding=1),
+            nn.Conv2d(64, 64, kernel_size=1, stride=1, padding=1, bias=False),
             nn.BatchNorm2d(64),
             nn.ReLU(inplace=True),
-            nn.Conv2d(64, 192, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(64, 192, kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm2d(192),
             nn.ReLU(inplace=True)
         )
@@ -41,30 +41,30 @@ class GoogLeNet(nn.Module):
             nn.AvgPool2d(kernel_size=7, stride=1),
             nn.Dropout(p=0.4, inplace=True)
         )
-        self.classifier = nn.Linear(1024,num_classes)
+        self.classifier = nn.Linear(1024, num_classes)
 
-    def forward(self, x:torch.Tensor):
+    def forward(self, x:torch.Tensor) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         out:torch.Tensor = x
         out = self.conv1(out)
         out = self.maxpool1(out)
         out = self.conv2(out)
         out = self.maxpool2(out)
-        out = self.inception_3a(out)
-        out = self.inception_3b(out)
+        out, _ = self.inception_3a(out)
+        out, _ = self.inception_3b(out)
         out = self.maxpool3(out)
-        out = self.inception_4a(out)
-        out = self.inception_4b(out, self.training)
-        out = self.inception_4c(out)
-        out = self.inception_4d(out)
-        out = self.inception_4e(out, self.training)
+        out, _ = self.inception_4a(out)
+        out, aux1 = self.inception_4b(out, self.training)
+        out, _ = self.inception_4c(out)
+        out, _ = self.inception_4d(out)
+        out, aux2 = self.inception_4e(out, self.training)
         out = self.maxpool4(out)
-        out = self.inception_5a(out)
-        out = self.inception_5b(out)
+        out, _ = self.inception_5a(out)
+        out, _ = self.inception_5b(out)
         out = self.avgpool(out)
         out = out.view(out.size(0), -1)
         out = self.classifier(out)
 
-        return out
+        return aux1, aux2, out
     
     def inception_module(self, *args) -> InceptionModulev1 | InceptionModulev2 | InceptionModulev3 | InceptionModulev4:
         blocks = {
