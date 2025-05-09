@@ -58,7 +58,6 @@ test_loader = torch.utils.data.DataLoader(
     shuffle=True
 )
 
-model = NiN(num_classes).to(device)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(
     params = model.parameters(),
