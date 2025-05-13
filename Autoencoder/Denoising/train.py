@@ -83,13 +83,10 @@ plt.figure(figsize=(20, 4))
 for i in range(n):
     # Originals
     ax = plt.subplot(2, n, i + 1)
-    plt.imshow(images[i].cpu().squeeze(), cmap='gray')
+    plt.imshow(images[i].cpu().permute(1, 2, 0))  # [C, H, W] → [H, W, C]
     plt.axis("off")
     # Reconstructed
     ax = plt.subplot(2, n, i + 1 + n)
-    plt.imshow(recon[i].squeeze(), cmap='gray')
+    plt.imshow(recon[i].permute(1, 2, 0))  # idem
     plt.axis("off")
 plt.show()
-
-
-# need to fix reconstructed images
