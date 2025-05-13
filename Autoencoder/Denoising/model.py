@@ -86,9 +86,3 @@ class DAE(nn.Module):
         x = self.decoder(x)
 
         return x
-    
-
-model = DAE()
-image = torch.randn(1, 3, 224, 224)
-image_noise = nn.Dropout(p=1.0)(image)
-print(model(image).shape)
