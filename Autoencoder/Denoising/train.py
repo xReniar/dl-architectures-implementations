@@ -2,27 +2,28 @@ import torch
 from torch import nn, optim
 from torchvision import datasets, transforms
 from model import DAE
+import matplotlib.pyplot as plt
 
 
 # device selection
 device = "cpu"
 if torch.cuda.is_available():
     device = "cuda"
-if torch.backends.mps.is_available():
+if torch.mps.is_available():
     device = "mps"
 
-train_dataset = datasets.ImageNet(
+train_dataset = datasets.STL10(
     root = "../../data",
-    train = True,
+    split="train",
     transform = transforms.Compose([
         transforms.ToTensor()
     ]),
     download = True
 )
 
-test_dataset = datasets.ImageNet(
+test_dataset = datasets.STL10(
     root = "../../data",
-    train = False,
+    split="test",
     transform = transforms.Compose([
         transforms.ToTensor()
     ]),
@@ -31,14 +32,57 @@ test_dataset = datasets.ImageNet(
 
 train_loader = torch.utils.data.DataLoader(
     dataset=train_dataset,
-    batch_size=128,
+    batch_size=32,
     shuffle=True
 )
 
 test_loader = torch.utils.data.DataLoader(
     dataset=test_dataset,
-    batch_size=128,
+    batch_size=32,
     shuffle=False
 )
 
-model = DAE()
+model = DAE().to(device)
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=1e-3)
+epochs = 10
+total_step = len(train_loader)
+
+for epoch in range(epochs):
+    # training
+    for i, (images, _) in enumerate(train_loader):
+        images = images.to(device)
+
+        noise = torch.randn_like(images) * 0.3
+        noisy_images = images + noise
+        noisy_images = torch.clamp(noisy_images, 0., 1.)
+
+        outputs = model(noisy_images)
+        loss = criterion(outputs, images)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        if i % 100 == 0:
+            print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' .format(epoch+1, epochs, i+1, total_step, loss.item()))
+
+model.eval()
+test_iter = iter(test_loader)
+images, _ = next(test_iter)
+images = images.to(device)
+recon = model(images).detach().cpu()
+
+# Show originals and reconstructed images
+n = 20
+plt.figure(figsize=(20, 4))
+for i in range(n):
+    # Originals
+    ax = plt.subplot(2, n, i + 1)
+    plt.imshow(images[i].cpu().squeeze(), cmap='gray')
+    plt.axis("off")
+    # Reconstructed
+    ax = plt.subplot(2, n, i + 1 + n)
+    plt.imshow(recon[i].squeeze(), cmap='gray')
+    plt.axis("off")
+plt.show()
