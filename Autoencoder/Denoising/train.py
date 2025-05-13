@@ -90,3 +90,6 @@ for i in range(n):
     plt.imshow(recon[i].squeeze(), cmap='gray')
     plt.axis("off")
 plt.show()
+
+
+# need to fix reconstructed images
