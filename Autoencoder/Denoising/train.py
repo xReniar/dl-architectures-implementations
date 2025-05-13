@@ -12,10 +12,13 @@ if torch.cuda.is_available():
 if torch.mps.is_available():
     device = "mps"
 
+img_size = (224, 224)
+
 train_dataset = datasets.STL10(
     root = "../../data",
     split="train",
     transform = transforms.Compose([
+        transforms.Resize(img_size),
         transforms.ToTensor()
     ]),
     download = True
@@ -25,6 +28,7 @@ test_dataset = datasets.STL10(
     root = "../../data",
     split="test",
     transform = transforms.Compose([
+        transforms.Resize(img_size),
         transforms.ToTensor()
     ]),
     download = True
