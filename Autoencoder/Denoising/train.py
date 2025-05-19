@@ -1,7 +1,7 @@
 import torch
 from torch import nn, optim
 from torchvision import datasets, transforms
-from model import DAE
+from model import UNet
 import matplotlib.pyplot as plt
 
 
@@ -46,7 +46,7 @@ test_loader = torch.utils.data.DataLoader(
     shuffle=False
 )
 
-model = DAE().to(device)
+model = UNet().to(device)
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3)
 epochs = 10
