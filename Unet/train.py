@@ -15,7 +15,7 @@ if torch.mps.is_available():
 img_size = (224, 224)
 
 train_dataset = datasets.STL10(
-    root = "../../data",
+    root = "../data",
     split="train",
     transform = transforms.Compose([
         transforms.Resize(img_size),
@@ -25,7 +25,7 @@ train_dataset = datasets.STL10(
 )
 
 test_dataset = datasets.STL10(
-    root = "../../data",
+    root = "../data",
     split="test",
     transform = transforms.Compose([
         transforms.Resize(img_size),
